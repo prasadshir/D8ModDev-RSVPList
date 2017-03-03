@@ -6,3 +6,4 @@ dependencies:
   - block
 version: 1.0
 core: 8.x
+configure: rsvplist.admin_settings

@@ -1,0 +1,62 @@
+<?php
+/**
+ * Implements hook_schema().
+ *
+ */
+function rsvplist_schema() {
+  $schema['rsvplist'] = array(
+    'description' => 'Stores email, timestamp, nid and uid for an rsvp',
+    'fields' => array(
+      'id' => array(
+        'description' => 'The primary identifier for the record.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'uid' => array(
+        'description' => 'The {users}.uid that added this rsvp.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+      'nid' => array(
+        'description' => 'The {node} .nid for this rsvp.',
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => FALSE,
+        'default' => 0,
+      ),
+      'mail' => array(
+        'description' => 'User\'s email address.',
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => FALSE,
+        'default' => '',
+      ),
+      'created' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+        'description' => 'Timestamp for when rsvp was created.',
+      ),
+    ),
+    'primary key' => array('id'),
+    'indexes' => array(
+      'node' => array('nid'),
+      'node_user' => array('nid', 'uid'),
+    ),
+  );
+ $schema['rsvplist_enabled'] = array(
+    'description' => 'Tracks whether rsvplist is enabled for a node.',
+    'fields' => array(
+      'nid' => array(
+        'description' => 'The {node}.nid that has rsvplist enabled.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ),
+    ),
+    'primary key' => array('nid'),
+  );
+  return $schema;
+}
