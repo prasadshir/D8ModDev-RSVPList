@@ -7,6 +7,8 @@ The repository has multiple branches. Each branch corresponds to a specific exer
 
 E.g. While doing exercise 3.2.1, just do a 
 
-```git checkout ex3.2.1
+```
+git checkout ex3.2.1
+
 ```
 The master branch contains the final code. 
