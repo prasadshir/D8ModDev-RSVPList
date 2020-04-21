@@ -8,6 +8,7 @@ namespace Drupal\rsvplist\Form;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Messenger\MessengerInterface;
 
 /**
  * Provides a RSVP Email form.
@@ -34,14 +35,14 @@ class RSVPForm extends FormBase {
       '#description' => t("We'll send updates to the email address you provide."),
       '#required' => TRUE,
     );
-    $form['submit'] = array(
+    $form['submit'] = [
       '#type' => 'submit',
       '#value' => t('RSVP'),
-    );
-    $form['nid'] = array(
+    ];
+    $form['nid'] = [
       '#type' => 'hidden',
       '#value' => $nid,
-    );
+    ];
     return $form;
   }
 
@@ -49,6 +50,6 @@ class RSVPForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    drupal_set_message(t('The form is working.'));
+    $this->messenger()->addMessage(t('The form is working.'));
   }
 }
