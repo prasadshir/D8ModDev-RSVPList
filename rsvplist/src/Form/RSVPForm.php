@@ -1,20 +1,22 @@
 <?php
-
+/**
+ * @file
+ * Contains \Drupal\rsvplist\Form\RSVPForm
+ */
 namespace Drupal\rsvplist\Form;
 
 use Drupal\Core\Database\Database;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-
+use Drupal\Core\Messenger\MessengerInterface;
 
 /**
- * Provides an RSVP Email form
- * */
-
+ * Provides a RSVP Email form.
+ */
 class RSVPForm extends FormBase {
+
   /**
-   * (@inheritdoc)
-   *
+   * {@inheritdoc}
    */
   public function getFormId() {
     return 'rsvplist_email_form';
@@ -33,14 +35,14 @@ class RSVPForm extends FormBase {
       '#description' => t("We'll send updates to the email address you provide."),
       '#required' => TRUE,
     );
-    $form['submit'] = array(
+    $form['submit'] = [
       '#type' => 'submit',
       '#value' => t('RSVP'),
-    );
-    $form['nid'] = array(
+    ];
+    $form['nid'] = [
       '#type' => 'hidden',
       '#value' => $nid,
-    );
+    ];
     return $form;
   }
 
@@ -50,33 +52,31 @@ class RSVPForm extends FormBase {
   public function validateForm(array &$form, FormStateInterface $form_state) {
     $value = $form_state->getValue('email');
     if ($value == !\Drupal::service('email.validator')->isValid($value)) {
-      $form_state->setErrorByName('email', t('The email address %mail is not valid.', array('%mail' => $value)));
+      $form_state->setErrorByName('email', $this->t('The email address %mail is not valid.', ['%mail' => $value]));
       return;
     }
   }
-
+ 
   /**
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
-
     $query = \Drupal::database()->insert('rsvplist');
-    $query->fields(array(
+    $query->fields([
       'mail',
       'nid',
       'uid',
       'created',
-    ));
-    $query->values(array(
-       $form_state->getValue('email'),
+    ]);
+    $query->values(
+      [ $form_state->getValue('email'),
         $form_state->getValue('nid'),
         $user->id(),
         time(),
-      )
+      ]
     );
     $query->execute();
-
-    drupal_set_message(t('Thank you for your RSVP, you are on the list for the event.'));
+    $this->messenger()->addMessage(t(('Thank you for your RSVP, you are on the list for the event.')));
   }
 }

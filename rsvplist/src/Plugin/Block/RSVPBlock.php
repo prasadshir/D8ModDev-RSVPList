@@ -25,6 +25,6 @@ class RSVPBlock extends BlockBase {
    * {@inheritdoc}
    */
   public function build() {
-    return array ('#markup' => $this->t('My RSVP List Block'));
+    return ['#markup' => $this->t('My RSVP List Block')];
     }
   }
