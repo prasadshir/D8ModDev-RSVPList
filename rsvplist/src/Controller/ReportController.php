@@ -39,26 +39,26 @@ class ReportController extends ControllerBase {
    *  Render array for report output.
    */
   public function report() {
-    $content = array();
-    $content['message'] = array(
+    $content = [];
+    $content['message'] = [
       '#markup' => $this->t('Below is a list of all Event RSVPs including username, email address and the name of the event they will be attending.'),
-    );
-    $headers = array(
+    ];
+    $headers = [
       t('Name'),
       t('Event'),
       t('Email'),
-    );
-    $rows = array();
+    ];
+    $rows = [];
     foreach ($entries = $this->load() as $entry) {
       // Sanitize each entry.
       $rows[] = array_map('Drupal\Component\Utility\SafeMarkup::checkPlain', $entry);
     }
-    $content['table'] = array(
+    $content['table'] = [
       '#type' => 'table',
       '#header' => $headers,
       '#rows' => $rows,
-      '#empty' => t('No entries available.'),
-    );
+      '#empty' => $this->t('No entries available.'),
+    ];
     // Don't cache this page.
     $content['#cache']['max-age'] = 0;
     return $content;
