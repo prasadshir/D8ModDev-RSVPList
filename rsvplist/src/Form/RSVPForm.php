@@ -3,7 +3,8 @@
  * @file
  * Contains \Drupal\rsvplist\Form\RSVPForm
  */
-namespace Drupal\rsvplist\Form;
+
+ namespace Drupal\rsvplist\Form;
 
 use Drupal\Core\Database\Database;
 use Drupal\Core\Form\FormBase;
@@ -28,13 +29,13 @@ class RSVPForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $node = \Drupal::routeMatch()->getParameter('node');
     $nid = $node->nid->value;
-    $form['email'] = array(
+    $form['email'] = [
       '#title' => t('Email address'),
       '#type' => 'textfield',
       '#size' => 25,
       '#description' => t("We'll send updates to the email address you provide."),
       '#required' => TRUE,
-    );
+    ];
     $form['submit'] = [
       '#type' => 'submit',
       '#value' => t('RSVP'),
