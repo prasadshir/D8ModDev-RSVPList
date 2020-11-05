@@ -21,20 +21,16 @@ class RSVPForm extends FormBase {
   public function getFormId() {
     return 'rsvplist_email_form';
   }
-
-  /**
-   * {@inheritdoc}
-   */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $node = \Drupal::routeMatch()->getParameter('node');
     $nid = $node->nid->value;
-    $form['email'] = array(
+    $form['email'] = [
       '#title' => t('Email address'),
       '#type' => 'textfield',
       '#size' => 25,
       '#description' => t("We'll send updates to the email address you provide."),
       '#required' => TRUE,
-    );
+    ];
     $form['submit'] = [
       '#type' => 'submit',
       '#value' => t('RSVP'),
@@ -51,12 +47,12 @@ class RSVPForm extends FormBase {
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     $value = $form_state->getValue('email');
-    if ($value == !\Drupal::service('email.validator')->isValid($value)) {
+    if (!(\Drupal::service('email.validator')->isValid($value))) {
       $form_state->setErrorByName('email', $this->t('The email address %mail is not valid.', ['%mail' => $value]));
       return;
     }
   }
- 
+
   /**
    * {@inheritdoc}
    */
