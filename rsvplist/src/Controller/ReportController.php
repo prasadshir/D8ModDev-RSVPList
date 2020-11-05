@@ -48,11 +48,12 @@ class ReportController extends ControllerBase {
       t('Event'),
       t('Email'),
     ];
+
     $rows = [];
     foreach ($entries = $this->load() as $entry) {
-      // Sanitize each entry.
-      $rows[] = array_map('Drupal\Component\Utility\SafeMarkup::checkPlain', $entry);
+      $rows[] = $entry;
     }
+
     $content['table'] = [
       '#type' => 'table',
       '#header' => $headers,
