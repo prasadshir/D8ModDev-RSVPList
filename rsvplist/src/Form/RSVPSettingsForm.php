@@ -37,7 +37,7 @@ class RSVPSettingsForm extends ConfigFormBase {
       '#title' => $this->t('The content types to enable RSVP collection for'),
       '#default_value' => $config->get('allowed_types'),
       '#options' => $types,
-      '#description' => $this->t('On the specified node types, an RSVP option will be available and can be enabled while tht node is being edited.'),
+      '#description' => $this->t('On the specified node types, an RSVP option will be available and can be enabled while that node is being edited.'),
     ];
     return parent::buildForm($form,$form_state);
   }
