@@ -21,8 +21,7 @@ function rsvplist_schema() {
       ],
       'nid' => [
         'description' => 'The {node} .nid for this rsvp.',
-        'type' => 'varchar',
-        'length' => 64,
+        'type' => 'int',
         'not null' => FALSE,
         'default' => 0,
       ],
